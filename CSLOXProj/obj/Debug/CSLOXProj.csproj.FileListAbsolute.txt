@@ -1,0 +1,2 @@
+C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\obj\Debug\CSLOXProj.csproj.AssemblyReference.cache
+C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\obj\Debug\CSLOXProj.csproj.CoreCompileInputs.cache

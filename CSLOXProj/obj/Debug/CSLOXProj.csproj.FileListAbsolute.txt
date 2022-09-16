@@ -1,2 +1,7 @@
 C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\obj\Debug\CSLOXProj.csproj.AssemblyReference.cache
 C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\obj\Debug\CSLOXProj.csproj.CoreCompileInputs.cache
+C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\bin\Debug\CSLOXProj.exe.config
+C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\bin\Debug\CSLOXProj.exe
+C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\bin\Debug\CSLOXProj.pdb
+C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\obj\Debug\CSLOXProj.exe
+C:\Users\jwsay\OneDrive\Documents\University of Alabama\Class Files\2022 Fall\CS 503\Code\CSLOXProj\CSLOXProj\obj\Debug\CSLOXProj.pdb

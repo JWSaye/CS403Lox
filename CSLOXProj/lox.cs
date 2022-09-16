@@ -10,7 +10,7 @@ namespace CSLOXProj
     {
         static bool hadError = false;
 
-        static public void main(string[] args)
+        static public void Main(string[] args)
         {
             if (args.Length > 1)
             {
@@ -41,7 +41,7 @@ namespace CSLOXProj
         {
             for (; ; )
             {
-                Console.WriteLine("> ");
+                Console.Write("> ");
                 string line = Console.ReadLine();
                 if (line == null) break;
                 run(line);
@@ -57,11 +57,11 @@ namespace CSLOXProj
             // For now, just print the tokens.
             foreach (Token token in tokens)
             {
-                Console.WriteLine(token);
+                Console.WriteLine(token.toString());
             }
         }
 
-        static void error(int line, string message)
+        static public void error(int line, string message)
         {
             report(line, "", message);
         }

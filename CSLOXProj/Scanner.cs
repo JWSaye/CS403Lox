@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSLOXProj
 {
-    class Scanner
+    public class Scanner
     {
         private readonly String source;
         private readonly List<Token> tokens = new List<Token>();
@@ -14,12 +14,12 @@ namespace CSLOXProj
         private int current = 0;
         private int line = 1;
 
-        Scanner(String source)
+        public Scanner(String source)
         {
             this.source = source;
         }
 
-        List<Token> scanTokens()
+        public List<Token> scanTokens()
         {
             while (!isAtEnd())
             {
@@ -28,7 +28,7 @@ namespace CSLOXProj
                 scanToken();
             }
 
-            tokens.push_back(new Token(EOF, "", null, line));
+            tokens.Add(new Token(TokenType.EOF, "", null, line));
             return tokens;
         }
 
@@ -42,27 +42,27 @@ namespace CSLOXProj
             char c = advance();
             switch (c)
             {
-                case '(': addToken(LEFT_PAREN); break;
-                case ')': addToken(RIGHT_PAREN); break;
-                case '{': addToken(LEFT_BRACE); break;
-                case '}': addToken(RIGHT_BRACE); break;
-                case ',': addToken(COMMA); break;
-                case '.': addToken(DOT); break;
-                case '-': addToken(MINUS); break;
-                case '+': addToken(PLUS); break;
-                case ';': addToken(SEMICOLON); break;
-                case '*': addToken(STAR); break;
+                case '(': addToken(TokenType.LEFT_PAREN); break;
+                case ')': addToken(TokenType.RIGHT_PAREN); break;
+                case '{': addToken(TokenType.LEFT_BRACE); break;
+                case '}': addToken(TokenType.RIGHT_BRACE); break;
+                case ',': addToken(TokenType.COMMA); break;
+                case '.': addToken(TokenType.DOT); break;
+                case '-': addToken(TokenType.MINUS); break;
+                case '+': addToken(TokenType.PLUS); break;
+                case ';': addToken(TokenType.SEMICOLON); break;
+                case '*': addToken(TokenType.STAR); break;
                 case '!':
-                    addToken(match('=') ? BANG_EQUAL : BANG);
+                    addToken(match('=') ? TokenType.BANG_EQUAL : TokenType.BANG);
                     break;
                 case '=':
-                    addToken(match('=') ? EQUAL_EQUAL : EQUAL);
+                    addToken(match('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL);
                     break;
                 case '<':
-                    addToken(match('=') ? LESS_EQUAL : LESS);
+                    addToken(match('=') ? TokenType.LESS_EQUAL : TokenType.LESS);
                     break;
                 case '>':
-                    addToken(match('=') ? GREATER_EQUAL : GREATER);
+                    addToken(match('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER);
                     break;
                 case '/':
                     if (match('/'))
@@ -72,7 +72,7 @@ namespace CSLOXProj
                     }
                     else
                     {
-                        addToken(SLASH);
+                        addToken(TokenType.SLASH);
                     }
                     break;
                 case ' ':
@@ -106,7 +106,7 @@ namespace CSLOXProj
 
         private char advance()
         {
-            return source.charAt(current++);
+            return source[current++];
         }
 
         private void addToken(TokenType type)
@@ -116,14 +116,14 @@ namespace CSLOXProj
 
         private void addToken(TokenType type, Object literal)
         {
-            String text = source.substring(start, current);
-            tokens.add(new Token(type, text, literal, line));
+            string text = source.Substring(start, current-start);
+            tokens.Add(new Token(type, text, literal, line));
         }
 
         private bool match(char expected)
         {
             if (isAtEnd()) return false;
-            if (source.charAt(current) != expected) return false;
+            if (source[current] != expected) return false;
 
             current++;
             return true;
@@ -132,7 +132,7 @@ namespace CSLOXProj
         private char peek()
         {
             if (isAtEnd()) return '\0';
-            return source.charAt(current);
+            return source[current];
         }
 
         private void String () 
@@ -151,8 +151,8 @@ namespace CSLOXProj
             advance();
 
             // Trim the surrounding quotes.
-            string value = source.substring(start + 1, current - 1);
-            addToken(STRING, value);
+            string value = source.Substring(start + 1, current - 1 - (start + 1));
+            addToken(TokenType.STRING, value);
         }
 
         private bool isDigit(char c)
@@ -173,23 +173,23 @@ namespace CSLOXProj
                 while (isDigit(peek())) advance();
             }
 
-            addToken(NUMBER,
-                Double.parseDouble(source.substring(start, current)));
+            addToken(TokenType.NUMBER,
+                Double.Parse(source.Substring(start, current-start)));
         }
 
         private char peekNext()
         {
             if (current + 1 >= source.Length) return '\0';
-            return source.charAt(current + 1);
+            return source[current + 1];
         }
 
         private void identifier()
         {
             while (isAlphaNumeric(peek())) advance();
 
-            String text = source.substring(start, current);
-            TokenType type = keywords.get(text);
-            if (type == null) type = IDENTIFIER;
+            String text = source.Substring(start, current-start);
+            TokenType type;
+            if (!keywords.TryGetValue(text, out type)) type = TokenType.IDENTIFIER;
             addToken(type);
         }
 
@@ -205,26 +205,26 @@ namespace CSLOXProj
             return isAlpha(c) || isDigit(c);
         }
 
-        private static readonly Map<String, TokenType> keywords;
+        private static readonly Dictionary<string, TokenType> keywords;
 
-        static {
-            keywords = new HashMap<>();
-            keywords.put("and",    AND);
-            keywords.put("class",  CLASS);
-            keywords.put("else",   ELSE);
-            keywords.put("false",  FALSE);
-            keywords.put("for",    FOR);
-            keywords.put("fun",    FUN);
-            keywords.put("if",     IF);
-            keywords.put("nil",    NIL);
-            keywords.put("or",     OR);
-            keywords.put("print",  PRINT);
-            keywords.put("return", RETURN);
-            keywords.put("super",  SUPER);
-            keywords.put("this",   THIS);
-            keywords.put("true",   TRUE);
-            keywords.put("var",    VAR);
-            keywords.put("while",  WHILE);
+        static Scanner(){
+            keywords = new Dictionary<string, TokenType>();
+            keywords.Add("and",    TokenType.AND);
+            keywords.Add("class",  TokenType.CLASS);
+            keywords.Add("else",   TokenType.ELSE);
+            keywords.Add("false",  TokenType.FALSE);
+            keywords.Add("for",    TokenType.FOR);
+            keywords.Add("fun",    TokenType.FUN);
+            keywords.Add("if",     TokenType.IF);
+            keywords.Add("nil",    TokenType.NIL);
+            keywords.Add("or",     TokenType.OR);
+            keywords.Add("print",  TokenType.PRINT);
+            keywords.Add("return", TokenType.RETURN);
+            keywords.Add("super",  TokenType.SUPER);
+            keywords.Add("this",   TokenType.THIS);
+            keywords.Add("true",   TokenType.TRUE);
+            keywords.Add("var",    TokenType.VAR);
+            keywords.Add("while",  TokenType.WHILE);
        }
 }
 }
